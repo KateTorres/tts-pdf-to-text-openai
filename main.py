@@ -1,4 +1,4 @@
-import os
+import os 
 import sys
 import json
 from file_selector import select_pdf_file
@@ -14,7 +14,7 @@ def save_last_directory(directory):
         json.dump({"last_dir": directory}, f)
 
 def load_last_directory():
-    """Loads the last accessed directory from a file, defaults to current directory."""
+    """Loads the last accessed directory from a file, defaulting to the current directory."""
     if os.path.exists(LAST_DIR_FILE):
         with open(LAST_DIR_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -22,7 +22,7 @@ def load_last_directory():
     return os.getcwd()
 
 def main():
-    # Load last accessed directory
+    # Load the last accessed directory.
     last_dir = load_last_directory()
     pdf_path = select_pdf_file(last_dir)
     
@@ -30,17 +30,17 @@ def main():
         print("Error: No file selected. Please select a valid PDF file.")
         sys.exit(1)
 
-    # Save last accessed directory
+    # Save the directory of the selected PDF for future use.
     save_last_directory(os.path.dirname(pdf_path))
 
-    # Ask for processing method
+    # Ask the user for the processing method.
     processing_choice = input("Choose processing method (1 for OpenAI API, 2 for Local Processing): ").strip()
     
     if processing_choice not in ["1", "2"]:
         print("Error: Invalid selection. Please choose 1 or 2.")
         sys.exit(1)
 
-    # Ask for page range
+    # Ask for the page range.
     try:
         start_page = int(input("Enter the starting page number: ").strip())
         end_page = int(input("Enter the ending page number: ").strip())
@@ -51,9 +51,9 @@ def main():
         print("Error: Invalid page numbers. Please enter valid integers (start must be ≤ end).")
         sys.exit(1)
 
-    # Process PDF based on user selection
+    # Process the PDF based on user selection.
     if processing_choice == "1":
-        # OpenAI API Processing
+        # OpenAI API Processing.
         language_choice = input("Enter the PDF language (en for English, ru for Russian): ").strip().lower()
         if language_choice not in ["en", "ru"]:
             print("Error: Invalid language selection. Please choose 'en' or 'ru'.")
@@ -64,14 +64,14 @@ def main():
 
         extracted_text = openai_extract(pdf_path, language_choice, start_page, end_page, model)
     
-        # Calculate and log cost
+        # Calculate and log the cost for OpenAI API usage.
         calculate_cost()
     
     else:
-        # Local Processing (No API)
+        # Local Processing (No API) – now updated to better handle both English and Russian.
         extracted_text, pdf_name, duration, pages_processed = local_extract(pdf_path, start_page, end_page)
 
-    # Define output file path in the same directory as PDF
+    # Save the extracted text to a file in the same directory as the PDF.
     output_file = os.path.join(os.path.dirname(pdf_path), f"extracted_text_{start_page}-{end_page}.txt")
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(extracted_text)
@@ -80,3 +80,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    
