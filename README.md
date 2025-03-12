@@ -21,8 +21,8 @@ This project extracts text from PDF files, processes it using the OpenAI API, an
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/yourusername/pdf-text-extractor.git
-cd pdf-text-extractor
+git clone https://github.com/KateTorres/tts-pdf-to-text-openai
+cd tts-pdf-to-text-openai
 ```
 
 ### Install Dependencies
@@ -74,5 +74,4 @@ Contributions are welcome. Submit a pull request or open an issue.
 This project is licensed under the MIT License.
 
 ## Contact
-For questions or suggestions, reach out via [GitHub Issues](https://github.com/yourusername/pdf-text-extractor/issues).
-
+For questions or suggestions, reach out via [GitHub Issues](https://github.com/KateTorres/tts-pdf-to-text-openai).
