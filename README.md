@@ -8,7 +8,6 @@ This project extracts text from PDF files, processes it using the OpenAI API, an
 
 ## Features
 - Extract text from specific page ranges in a PDF
-- Processes PDFs in English or Russian without translation
 - Uses GPT-3.5-Turbo for cost-efficient processing (GPT-4o available for higher quality)
 - Automatic logging of tasks (file name, duration, model used, tokens used, API calls made, and cost calculation)
 - Log rotation when file size exceeds 100 KB
