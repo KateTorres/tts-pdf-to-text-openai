@@ -72,7 +72,7 @@ def main():
         extracted_text, pdf_name, duration, pages_processed = local_extract(pdf_path, start_page, end_page)
 
     # Define output file path in the same directory as PDF
-    output_file = os.path.join(os.path.dirname(pdf_path), f"extracted_text_{start_page}-{end_page}.txt")
+    output_file = os.path.join(os.path.dirname(pdf_path), f"extracted_text_{start_page}-{end_page}.txt")    
     with open(output_file, "w", encoding="utf-8") as f:
         f.write(extracted_text)
 
@@ -80,4 +80,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
