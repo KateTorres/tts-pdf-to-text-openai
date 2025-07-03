@@ -23,7 +23,7 @@ Features include paragraph restoration, hyphenation fix, formatting cleanup, and
 
 ### 1. Clone the repository
 
-git clone https://github.com/your-username/pdf-text-extractor.git
+git clone https://github.com/KateTorres/pdf-text-extractor.git
 cd pdf-text-extractor
 
 ## 2. Install dependencies
