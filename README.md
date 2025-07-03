@@ -1,76 +1,94 @@
-# tts_pdf_to_text_openai
-This repository provides a PDF text extraction tool that allows users to convert text from PDF files and optionally translate it into English or Russian using OpenAI's API. The tool supports page range selection, automatic logging, and model selection (GPT-3.5-Turbo or GPT-4o) for efficient processing.
+# PDF Text Extraction Toolkit
 
-# PDF Text Extractor with OpenAI API
+This toolkit extracts and cleans text from PDF files using either:
+- Local processing (offline, no API)
+- OpenAI API (GPT-3.5-Turbo or GPT-4o), with automatic cost tracking
 
-## Overview
-This project extracts text from PDF files, processes it using the OpenAI API, and provides an option to keep text in English or Russian. The extracted text is saved in the same directory as the source PDF file, and logs are maintained for tracking usage and cost.
+Features include paragraph restoration, hyphenation fix, formatting cleanup, and GUI-based file selection.
+
+---
 
 ## Features
-- Extract text from specific page ranges in a PDF
-- Uses GPT-3.5-Turbo for cost-efficient processing (GPT-4o available for higher quality)
-- Automatic logging of tasks (file name, duration, model used, tokens used, API calls made, and cost calculation)
-- Log rotation when file size exceeds 100 KB
-- User-friendly command-line interface
-- Works on Windows and Linux
-- Remembers last accessed directory for selecting PDF files
-- Saves output text file in the same directory as the selected PDF file
 
-## Installation
+- Extract PDF text using PyPDF2 (offline) or OpenAI GPT API
+- Clean line breaks, fix split or hyphenated words, remove headers/footers
+- Track OpenAI token usage and estimated cost per document
+- GUI-based file picker (remembers last folder used)
+- Cross-platform support (Windows `.bat`, Linux `.sh`)
+- Modular code with reusable components (`utils/`)
 
-### Clone the Repository
-```sh
-git clone https://github.com/KateTorres/tts-pdf-to-text-openai
-cd tts-pdf-to-text-openai
-```
+---
 
-### Install Dependencies
-```sh
+## How to Install
+
+### 1. Clone the repository
+
+git clone https://github.com/your-username/pdf-text-extractor.git
+cd pdf-text-extractor
+
+## 2. Install dependencies
+bash
+Copy
+Edit
 pip install -r requirements.txt
-```
 
-### Set OpenAI API Key
-```sh
-export OPENAI_API_KEY="your-api-key-here"  # Linux/macOS
-set OPENAI_API_KEY=your-api-key-here       # Windows (CMD)
-$env:OPENAI_API_KEY="your-api-key-here"    # Windows (PowerShell)
-```
+## 3. (Linux only) Install Tkinter if not already installed
 
-## Usage
+## 4. OpenAI Access (if not yet )
+⚠️ Note: Each run with OpenAI API will consume tokens and may incur charges. Use the built-in cost calculator to track expenses.
 
-### Windows
-```sh
-run_pdf_extraction.bat
-```
+OpenAI API Setup
+Go to OpenAI API Keys
+Click "Create new secret key"
+Copy the key and set it as an environment variable.
 
-### Linux/macOS
-```sh
+## Run
+### On Windows:
+python main.py or run_pdf_extraction.bat
+
+### On Linux/macOS:
+chmod +x run_pdf_extraction.py (first time that you use it)
 ./run_pdf_extraction.sh
+
+## Project Structure
 ```
-
-### Manual Execution
-```sh
-python main.py
+graphql
+Copy
+Edit
+.
+├── main.py 
+├── cost_calculator.py 
+├── local_pdf_to_text.py
+├── openai_pdf_to_text.py 
+├── file_selector.py
+├── requirements.txt
+├── run_pdf_exctraction.bat
+├── run_pdf_extraction.py
+├── CHANGELOG.md
+├── .gitignore
+├── pdf_processing_log.json
+├── cost_log.json
+├── last_directory.json
+├── utils/
+│   ├── dialogs.py
+│   ├── paths.py
+│   ├── logging_utils.py
 ```
+## Program Flow
+- Select a PDF file
+- Choose either:
+    - Local processing
+    - OpenAI API processing
+- Enter page range
+- Output is saved as .txt
+- Logs are updated with task and cost info
 
-## Cost Calculation
-After extracting text from the PDF, the program automatically calculates the cost based on OpenAI's pricing and logs it in `cost_log.json`.
-
-### Running Cost Calculation Separately
-```sh
-python cost_calculator.py
-```
-
-## Logging System
-- A log file (`pdf_processing_log.json`) is generated in the script's directory.
-- When the log file exceeds 100 KB, a new file is created with a timestamped name.
-- Cost calculations are logged in `cost_log.json`.
-
-## Contributions
-Contributions are welcome. Submit a pull request or open an issue.
+## Logs
+- pdf_processing_log.json: Info about each extraction
+- cost_log.json: Cost breakdown (OpenAI only)
+- last_directory.json: Remembers folder between runs
 
 ## License
 This project is licensed under the MIT License.
-
-## Contact
-For questions or suggestions, reach out via [GitHub Issues](https://github.com/KateTorres/tts-pdf-to-text-openai).
+You are free to use, modify, and distribute this software for personal or commercial purposes.
+See the LICENSE file for details.
