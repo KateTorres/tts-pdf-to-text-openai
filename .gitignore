@@ -20,4 +20,5 @@ venv/
 
 # macOS / Windows / Linux OS files
 .DS_Store
-Thumbs.db
+Thumbs.db!/docs/*.pdf
+!/.venv/

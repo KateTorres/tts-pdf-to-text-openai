@@ -5,6 +5,7 @@ import json
 import time
 from datetime import datetime
 import re
+from tqdm import tqdm
 from cost_calculator import log_cost
 
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY_JOHN"))
@@ -38,12 +39,17 @@ def extract_text_from_pdf(pdf_path, language="en", start_page=1, end_page=None, 
         if end_page is None or end_page > num_pages:
             end_page = num_pages
 
+        total_pages = end_page - (start_page - 1)
+        progress_bar = tqdm(total=total_pages, desc="Processing PDF pages", unit="page")
+
         page_texts = []
         for i in range(start_page - 1, end_page):
             raw_text = reader.pages[i].extract_text() or ""
             cleaned = remove_header_footer(raw_text).strip()
             if cleaned:
                 page_texts.append(cleaned)
+
+            progress_bar.update(1)
 
             if len(page_texts) >= batch_size or i == end_page - 1:
                 combined = "\n".join(page_texts)
@@ -59,6 +65,8 @@ def extract_text_from_pdf(pdf_path, language="en", start_page=1, end_page=None, 
                 if tokens_used_today >= MAX_TOKENS_PER_DAY:
                     print("Daily token limit reached.")
                     break
+
+        progress_bar.close()
 
     text_file = f"{os.path.splitext(os.path.basename(pdf_path))[0]}-extracted_text_{start_page}-{end_page}.txt"
     with open(text_file, "w", encoding="utf-8") as f:
